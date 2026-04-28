@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Art Dreamers · 声悦时刻</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #ffffff;  /* 纯白色背景 */
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .card {
+            max-width: 560px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            padding: 32px 28px 40px;
+            text-align: center;
+        }
+
+        /* 图片样式 */
+        .image-wrapper {
+            margin-bottom: 20px;
+        }
+        .art-image {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333333;
+            letter-spacing: -0.3px;
+            margin-bottom: 8px;
+        }
+
+        .sub {
+            color: #777777;
+            font-size: 0.85rem;
+            margin-bottom: 28px;
+            border-bottom: 1px solid #eeeeee;
+            display: inline-block;
+            padding-bottom: 6px;
+        }
+
+        .audio-box {
+            background: #f8f8f8;
+            border-radius: 32px;
+            padding: 16px 16px;
+            margin: 16px 0 16px;
+        }
+
+        audio {
+            width: 100%;
+            outline: none;
+            border-radius: 40px;
+        }
+
+        audio:focus {
+            outline: none;
+        }
+
+        .file-note {
+            font-size: 0.7rem;
+            color: #888888;
+            background: #f5f5f5;
+            display: inline-block;
+            padding: 6px 16px;
+            border-radius: 40px;
+            margin-top: 12px;
+        }
+
+        .footer {
+            margin-top: 28px;
+            font-size: 0.7rem;
+            color: #aaaaaa;
+            border-top: 1px solid #eeeeee;
+            padding-top: 18px;
+        }
+
+        @media (max-width: 560px) {
+            .card {
+                padding: 24px 20px 32px;
+            }
+            .title {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <!-- 图片区域 -->
+    <div class="image-wrapper">
+        <img class="art-image" id="mainImage" src="dreamers.jpg" alt="Art Dreamers & Beauty Care" onerror="this.onerror=null; this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'200\' height=\'200\' viewBox=\'0 0 200 200\'%3E%3Crect width=\'200\' height=\'200\' fill=\'%23f0f0f0\'/%3E%3Ctext x=\'50%25\' y=\'50%25\' font-size=\'14\' fill=\'%23999\' text-anchor=\'middle\' dy=\'.3em\'%3E📷 dreamers.jpg%3C/text%3E%3C/svg%3E';">
+    </div>
+
+    <div class="title">Art Dreamers<br>& Beauty Care</div>
+    <div class="sub">🎧 created by liuyingxi, suyutong, wangzhaoyi, lizhihan</div>
+
+    <div class="audio-box">
+        <audio id="audioPlayer" controls preload="metadata">
+            <source src="groupAaudio.mp3" type="audio/mpeg">
+            您的浏览器不支持 audio 元素。
+        </audio>
+    </div>
+
+    <div class="file-note">
+        🎵 正在播放：groupAaudio.mp3
+    </div>
+
+    <div class="footer">
+        💡 请将您的音频文件命名为 <code>groupAaudio.mp3</code><br>
+        图片文件命名为 <code>dreamers.jpg</code><br>
+        并放在与本网页相同的文件夹中。
+    </div>
+</div>
+
+<script>
+    const audio = document.getElementById('audioPlayer');
+    const errorDiv = document.createElement('div');
+    errorDiv.style.marginTop = '10px';
+    errorDiv.style.fontSize = '0.7rem';
+    errorDiv.style.color = '#c97e5a';
+    audio.parentNode.appendChild(errorDiv);
+
+    audio.onerror = function() {
+        let errMsg = '';
+        const err = audio.error;
+        if (err) {
+            switch (err.code) {
+                case MediaError.MEDIA_ERR_ABORTED: errMsg = '加载被中止'; break;
+                case MediaError.MEDIA_ERR_NETWORK: errMsg = '网络错误，请检查文件'; break;
+                case MediaError.MEDIA_ERR_DECODE: errMsg = '解码失败，请确认是标准 MP3 格式'; break;
+                case MediaError.MEDIA_ERR_SRC_NOT_SUPPORTED: errMsg = '音频文件不存在或格式不支持'; break;
+                default: errMsg = '未知错误';
+            }
+        }
+        errorDiv.innerHTML = `⚠️ 音频加载失败：${errMsg}<br>请确保 groupAaudio.mp3 文件已放在本网页同目录下。`;
+    };
+
+    audio.oncanplaythrough = function() {
+        errorDiv.innerHTML = '';
+    };
+</script>
+</body>
+</html>
